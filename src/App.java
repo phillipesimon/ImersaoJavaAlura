@@ -24,8 +24,6 @@ public class App {
 
         // Exibir os dados
         for (Map<String, String> filme : listaDeFilmes) {
-            System.out.println("");
-
             var IMDB = Float.parseFloat(filme.get("imDbRating"));
             if (IMDB >= 8) {
                 System.out.println("🌟🌟🌟🌟🌟");
@@ -39,7 +37,7 @@ public class App {
             System.out.println("Filme: " + "\u001b[1m " + filme.get("title") + "\u001b[0m");
             System.out.println("Poster: " + "\u001b[1m " + filme.get("image") + "\u001b[0m");
             System.out.println("IMDB Rating: " + "\u001b[1m " + filme.get("imDbRating") + "\u001b[0m");
-            System.out.println("\n");
+            System.out.println("");
         }
     }
 }
