@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -23,21 +25,25 @@ public class App {
         // System.out.println(listaDeFilmes.size());
 
         // Exibir os dados
+        var generator = new StickerGenetaror();
         for (Map<String, String> filme : listaDeFilmes) {
-            var IMDB = Float.parseFloat(filme.get("imDbRating"));
-            if (IMDB >= 8) {
-                System.out.println("🌟🌟🌟🌟🌟");
-            }
-            if (IMDB >= 6 && IMDB < 8) {
-                System.out.println("🌟🌟🌟");
-            }
-            if (IMDB < 6) {
-                System.out.println("🌟");
-            }
-            System.out.println("Filme: " + "\u001b[1m " + filme.get("title") + "\u001b[0m");
-            System.out.println("Poster: " + "\u001b[1m " + filme.get("image") + "\u001b[0m");
-            System.out.println("IMDB Rating: " + "\u001b[1m " + filme.get("imDbRating") + "\u001b[0m");
-            System.out.println("");
+            // var IMDB = Float.parseFloat(filme.get("imDbRating"));
+            // if (IMDB >= 8) {
+            // System.out.println("🌟🌟🌟🌟🌟");
+            // }
+            // if (IMDB >= 6 && IMDB < 8) {
+            // System.out.println("🌟🌟🌟");
+            // }
+            // if (IMDB < 6) {
+            // System.out.println("🌟");
+            // }
+            String urlImagem = filme.get("image");
+            String titulo = filme.get("title");
+
+            InputStream inputStream = new URL(urlImagem).openStream();
+            String archiveName = titulo + ".png";
+
+            generator.createSticker(inputStream, archiveName);
         }
     }
 }
