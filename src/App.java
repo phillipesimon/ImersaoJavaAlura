@@ -1,37 +1,35 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        // Making an HTTP connection and get the top 250 movies
-        String url = "https://api.mocki.io/v2/549a5d8b";
-        URI endereco = URI.create(url);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String body = response.body();
-        // System.out.println(body);
 
-        // Extract only the data that matter (title, poster, rating)
-        var parser = new JsonParser();
-        List<Map<String, String>> listaDeFilmes = parser.parse(body);
-        // System.out.println(listaDeFilmes.size());
+        // Making an HTTP connection
+        // URL aula 02 "https://api.mocki.io/v2/549a5d8b"
+        // String url =
+        // "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/TopMovies.json";
+        // ExtractContent extract = new ImdbSticker();
+
+        // URL aula 03
+        // "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/NASA-APOD.json"
+        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/NASA-APOD.json";
+        ExtractContent extract = new NasaSticker();
+
+        var http = new ClientHttp();
+        String json = http.SearchData(url);
 
         // Show the data
-        var generator = new StickerGenetaror();
-        for (Map<String, String> filme : listaDeFilmes) {
-            String urlImagem = filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String titulo = filme.get("title");
+        List<Content> contentList = extract.extractContent(json);
 
-            InputStream inputStream = new URL(urlImagem).openStream();
-            String archiveName = titulo + ".png";
+        var generator = new StickerGenerator();
+
+        for (int i = 0; i < 1; i++) {
+
+            Content content = contentList.get(i);
+
+            InputStream inputStream = new URL(content.getUrlImg()).openStream();
+            String archiveName = content.getTitle() + ".png";
 
             generator.createSticker(inputStream, archiveName);
         }

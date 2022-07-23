@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class StickerGenetaror {
+public class StickerGenerator {
 
   public void createSticker(InputStream inputStream, String archiveName) throws Exception {
 
@@ -30,7 +30,8 @@ public class StickerGenetaror {
     graphics.setColor(Color.YELLOW);
 
     // Write a sentence on the new img
-    graphics.drawString("Top 1 ImDb", width / 5, newHeight - 100);
+    graphics.drawString("Top 1 ImDb ", 150, newHeight - 100);
+
     // Write a new img to a file
     ImageIO.write(newImg, "png", new File("stickers/" + archiveName));
 
