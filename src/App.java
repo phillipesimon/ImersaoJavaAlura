@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        // Fazer uma conexão HTTP e buscar os top 250 filmes
+        // Making an HTTP connection and get the top 250 movies
         String url = "https://api.mocki.io/v2/549a5d8b";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
@@ -19,25 +19,15 @@ public class App {
         String body = response.body();
         // System.out.println(body);
 
-        // Extrair somente os dados que interessam (titulo, poster, classificação)
+        // Extract only the data that matter (title, poster, rating)
         var parser = new JsonParser();
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
         // System.out.println(listaDeFilmes.size());
 
-        // Exibir os dados
+        // Show the data
         var generator = new StickerGenetaror();
         for (Map<String, String> filme : listaDeFilmes) {
-            // var IMDB = Float.parseFloat(filme.get("imDbRating"));
-            // if (IMDB >= 8) {
-            // System.out.println("🌟🌟🌟🌟🌟");
-            // }
-            // if (IMDB >= 6 && IMDB < 8) {
-            // System.out.println("🌟🌟🌟");
-            // }
-            // if (IMDB < 6) {
-            // System.out.println("🌟");
-            // }
-            String urlImagem = filme.get("image");
+            String urlImagem = filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
             String titulo = filme.get("title");
 
             InputStream inputStream = new URL(urlImagem).openStream();

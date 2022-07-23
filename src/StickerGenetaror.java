@@ -32,7 +32,7 @@ public class StickerGenetaror {
     // Write a sentence on the new img
     graphics.drawString("Top 1 ImDb", width / 5, newHeight - 100);
     // Write a new img to a file
-    ImageIO.write(newImg, "png", new File("assets/" + archiveName));
+    ImageIO.write(newImg, "png", new File("stickers/" + archiveName));
 
   }
 
